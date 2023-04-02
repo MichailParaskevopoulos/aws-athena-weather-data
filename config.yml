@@ -1,0 +1,26 @@
+input_csv_config:
+  file_path: "files/Station Inventory EN.csv"
+  rows_to_skip: 3
+  year: 2023
+  city: "toronto"
+  station_name: "TORONTO CITY"
+  timeframe: "daily"
+
+s3_config:
+  bucket: "wave-weather-data"
+  object_name: "weather_data"
+
+athena_config:
+  athena_s3_output: "s3://athena-query-results-wave/"
+  table_name: "weather_data"
+  dataset_name: "wave"
+  partitions:
+    city: "string"
+    year: "int"
+
+aws_credentials:
+  ACCESS_KEY: "ACCESS_KEY"
+  SECRET_KEY: "SECRET_KEY"
+
+output_config:
+  file_name: "files/weather_data"
