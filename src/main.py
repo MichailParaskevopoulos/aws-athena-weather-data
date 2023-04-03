@@ -53,7 +53,13 @@ if __name__ == '__main__':
     
     # main method
     today = date.today()
-    if timeframe == 'daily':
+    if timeframe == 'hourly':
+        timeframe_value = 1
+    elif timeframe == 'daily':
+        timeframe_value = 2
+    elif timeframe == 'monthly':
+        timeframe_value = 3
+    else:
         timeframe_value = 2
 
     df_station_inventory = pd.read_csv(input_file_path, skiprows=rows_to_skip)
@@ -67,7 +73,7 @@ if __name__ == '__main__':
         year = year_0 - i
         
         if year > today.year:
-            break
+            continue
 
         weather_df = get_weather_data(
             year = year,
