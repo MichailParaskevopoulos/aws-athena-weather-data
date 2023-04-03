@@ -42,5 +42,5 @@
 ## SQL Queries
 The SQL queries are defined in constants.py
 - Query 1 returns the max and min temperature for the given year
-- Query 2 returns thr % difference between the avg temperature for the given year versus the avg of the 2 years prior to the given year (e.g., if the given year is 2023, we compare its mean to the avg temperature of 2022 and 2021)
+- Query 2 returns the % difference between the avg temperature for the given year versus the avg of the 2 years prior to the given year (e.g., if the given year is 2023, we compare its mean to the avg temperature of 2022 and 2021)
 - Query 3 calculates the % difference between the avg temperature of each month and the avg annual temperature, as well as the absolute difference between each month and its previous month
