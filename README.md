@@ -8,8 +8,8 @@
     ```
     docker build \
     -t wave:1.0 \
-    --build-arg ACCESS_KEY=AKIATPOZRPAYOOSG3XH5 \
-    --build-arg SECRET_KEY=BaAQlsqjaCiSdJaF6sFEgE5CPttplcIcaCbDfDkj \
+    --build-arg ACCESS_KEY={your access key} \
+    --build-arg SECRET_KEY={your secret key} \
     .
     ```
     The AWS keys will be set as environment variables in the docker image  
