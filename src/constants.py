@@ -1,3 +1,7 @@
+"""
+    SQL queries used to get the data from the Athena table
+"""
+
 QUERY_1 = """
 SELECT
     MAX(max_temp_c) AS max_temp_c,

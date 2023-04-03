@@ -1,7 +1,7 @@
 input_csv_config:
   file_path: "files/Station Inventory EN.csv"
   rows_to_skip: 3
-  year: 2023
+  year: 2020
   city: "toronto"
   station_name: "TORONTO CITY"
   timeframe: "daily"
@@ -17,10 +17,6 @@ athena_config:
   partitions:
     city: "string"
     year: "int"
-
-aws_credentials:
-  ACCESS_KEY: "ACCESS_KEY"
-  SECRET_KEY: "SECRET_KEY"
 
 output_config:
   file_name: "files/weather_data"

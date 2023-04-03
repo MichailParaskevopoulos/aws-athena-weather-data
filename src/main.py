@@ -3,6 +3,7 @@ from datetime import date
 import yaml
 import awswrangler as wr
 import os
+import logging
 
 from constants import (
     QUERY_1, 
@@ -17,8 +18,10 @@ from utils import (
 )
 from aws_wrapper import AwsWrapper
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 if __name__ == '__main__':
+    logging.info('Reading config params')
     with open('config.yml', 'r') as file:
         config = yaml.safe_load(file)
 
@@ -42,8 +45,8 @@ if __name__ == '__main__':
     dataset_name = config['athena_config']['dataset_name']
 
     # ENV variables
-    ACCESS_KEY = os.getenv(config['aws_credentials']['ACCESS_KEY'])
-    SECRET_KEY = os.getenv(config['aws_credentials']['SECRET_KEY'])
+    ACCESS_KEY = os.getenv('ACCESS_KEY')
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     aws = AwsWrapper(
         region = 'us-east-2',
@@ -62,6 +65,7 @@ if __name__ == '__main__':
     else:
         timeframe_value = 2
 
+    logging.info('Reading input file')
     df_station_inventory = pd.read_csv(input_file_path, skiprows=rows_to_skip)
 
     station_id = get_station_id(
@@ -74,6 +78,8 @@ if __name__ == '__main__':
         
         if year > today.year:
             continue
+
+        logging.info(f'Started pulling weather data for year: {year}')
 
         weather_df = get_weather_data(
             year = year,
@@ -103,6 +109,10 @@ if __name__ == '__main__':
             city = city,
             year = year
         )
+
+    logging.info(f'Ended pulling weather data for all years')
+
+    logging.info('Creating external Athena table')
 
     aws.create_athena_table(
         df = clean_df,

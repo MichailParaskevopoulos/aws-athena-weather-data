@@ -14,6 +14,7 @@ def get_station_id(
     station_name: str
 ) -> str:
     """
+    Function to get the station ID for a given station name
     """
     try:
         station_id = station_inventory[station_inventory['Name'] == station_name][['Station ID']].values[0][0]
@@ -28,8 +29,7 @@ def get_weather_data(
     timeframe_value: int
 ) -> pd.DataFrame:
     """
-
-    :param year_0: The initial year
+    Function to get the weather data from Canada Climate Services
     """
     url = f"https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID={station_id}&Year={year}&timeframe={timeframe_value}&submit=Download+Data"
     output_df = pd.read_csv(url)
@@ -59,6 +59,11 @@ def clean_data(
     dim_df: pd.DataFrame
 ) -> pd.DataFrame:
     """
+    Function for cleaning the raw data.
+    Transformations:
+        - drop any future dates
+        - merge weather data with input station inventory
+        - rename columns to replace illegal characters according to https://docs.aws.amazon.com/athena/latest/ug/tables-databases-columns-names.html
     """
     df = input_df[input_df['Date/Time'] < today.strftime("%Y-%m-%d")]
 
@@ -78,6 +83,9 @@ def write_to_excel(
     city: str,
     year: int
 ) -> None:
+    """
+    Function for writing output dataframe to excel
+    """
     if not exists(excel_file_name):
         mode = "w"
         if_sheet_exists = None

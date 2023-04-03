@@ -2,6 +2,7 @@ import boto3
 import awswrangler as wr
 import pandas as pd
 from enums import AthenaDataTypes
+import logging
 
 class AwsWrapper:
     def __init__(
@@ -36,7 +37,7 @@ class AwsWrapper:
         self,
         query: str,
         athena_s3_output: str
-    ) -> int:
+    ) -> None:
 
         client = self.session.client('athena')
 
@@ -47,7 +48,18 @@ class AwsWrapper:
             ResultConfiguration = config
         )
 
-        return r['ResponseMetadata']['HTTPStatusCode']
+        query_execution_id = r['QueryExecutionId']
+
+        while True:
+            r_execution = client.get_query_execution(
+                QueryExecutionId = query_execution_id
+            )
+
+            query_state = r_execution['QueryExecution']['Status']['State']
+
+            if query_state == 'SUCCEEDED':
+                logging.info('Athena query completed')
+                break
     
     def create_athena_table(
         self,
