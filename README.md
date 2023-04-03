@@ -4,8 +4,8 @@
 
 1. Clone the repo to your local machine
 2. Edit `config.yml` with your parameters:
-    - bucket: the bucker where the paritioned csv files will be stored
-    - athena_s3_output: the bucker where the output of the Athena queries will be stored
+    - bucket: the bucket where the paritioned csv files will be stored
+    - athena_s3_output: the bucket where the output of the Athena queries will be stored
     - dataset_name: the Athena dataset
     - table_name: the Athena table
 3. From the main directory of the repo execute the following command to build the docker image, while replacing the argument values with your AWS keys:
